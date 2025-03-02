@@ -411,7 +411,7 @@ class Exchange:
         # check if stock can be traded
         return not (
             self.check_stock_suspended(stock_id, start_time, end_time)
-            # or self.check_stock_limit(stock_id, start_time, end_time, direction)
+            or self.check_stock_limit(stock_id, start_time, end_time, direction)
         )
 
     def check_order(self, order: Order) -> bool:

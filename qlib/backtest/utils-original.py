@@ -31,7 +31,7 @@ class TradeCalendarManager:
         freq: str,
         start_time: Union[str, pd.Timestamp] = None,
         end_time: Union[str, pd.Timestamp] = None,
-        level_infra: LevelInfrastructure = None,
+        level_infra: LevelInfrastructure | None = None,
     ) -> None:
         """
         Parameters
@@ -99,7 +99,7 @@ class TradeCalendarManager:
     def get_trade_step(self) -> int:
         return self.trade_step
 
-    def get_step_time(self, trade_step: int = None, shift: int = 0) -> Tuple[pd.Timestamp, pd.Timestamp]:
+    def get_step_time(self, trade_step: int | None = None, shift: int = 0) -> Tuple[pd.Timestamp, pd.Timestamp]:
         """
         Get the left and right endpoints of the trade_step'th trading interval
 
@@ -128,10 +128,7 @@ class TradeCalendarManager:
         if trade_step is None:
             trade_step = self.get_trade_step()
         calendar_index = self.start_index + trade_step - shift
-        # return self._calendar[calendar_index], epsilon_change(self._calendar[calendar_index + 1])
-        # return返回两个变量，注释掉后一个代码，变成上面那个。
-        return self._calendar[calendar_index] ,self._calendar[calendar_index] + pd.Timedelta(days=1) - pd.Timedelta(seconds=1)
-
+        return self._calendar[calendar_index], epsilon_change(self._calendar[calendar_index + 1])
 
     def get_data_cal_range(self, rtype: str = "full") -> Tuple[int, int]:
         """
